@@ -1,0 +1,8 @@
+"UserInput" : { 
+	 "SmoothFWHMmm" : 8
+	 "TRs" : 7.200000e-01
+	 "mprageFileName" : "mpr/image.img"
+	 "boldFileName_RS" : "res_3/bold.img"
+	 "sliceOrderFile_RS" : "slice_order_RS.txt"
+	 "refSlice" : 1
+}

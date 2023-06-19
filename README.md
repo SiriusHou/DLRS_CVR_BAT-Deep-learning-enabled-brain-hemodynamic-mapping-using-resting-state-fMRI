@@ -19,6 +19,11 @@ conda activate DLRS_CVR_BAT_env
 pip install -r ./requirements.txt
 ```
 
+### Creating data folder
+This pipeline requires each data folder includes both raw BOLD and MPRAGE images. For the code to run automatically, 
+it's also essential to generate a parameter_RS.txt and slice_order_RS.txt file for each data folder, as demonstrated 
+in the ./template/subject1 folder.
+
 ### Downloading pretrained weights
 You can obtain the pre-trained weights by submitting a request to Hanzhang Lu. After receiving the weights, they should 
 be placed in the ./model directory.
