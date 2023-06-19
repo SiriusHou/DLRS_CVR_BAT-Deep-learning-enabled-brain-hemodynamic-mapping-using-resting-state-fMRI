@@ -4,8 +4,7 @@ cd([wkdir, filesep, subname]);
 mni_resolution = [2, 2, 2];
 mni_type = 16;
 
-addpath([code_directory, filesep, 'toolbox']);
-addpath([code_directory, filesep, 'lib']);
+addpath([code_directory, filesep, 'utils']);
 addpath([code_directory, filesep, 'spm12']);
 
 

@@ -41,8 +41,7 @@ end
 
 
 %% Global Parameter Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-addpath([code_directory, filesep, 'toolbox']);
-addpath([code_directory, filesep, 'lib']);
+addpath([code_directory, filesep, 'utils']);
 addpath([code_directory, filesep, 'spm12']);
 
 spm_get_defaults;
