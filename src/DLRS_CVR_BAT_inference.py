@@ -34,21 +34,15 @@ class CVRDataset(data.Dataset):
         'Generates one sample of data'
 
         # Load input
-        input_ID = self.input_IDs[index]
+        filename, extension = os.path.splitext(self.input_IDs[index])
+        img = nib.load(self.input_IDs[index])
 
-        filename, extension = os.path.splitext(input_ID)
-
-        img = nib.load(input_ID)
-        train_image = img.get_fdata()
-        train_image = train_image.astype(np.float32)
+        image, img_affine = img.get_fdata(), img.affine
+        image = np.transpose(image, (2, 0, 1))
+        image = torch.Tensor(image).type(torch.FloatTensor)
         img.uncache()
 
-        train_image = np.transpose(train_image, (2, 0, 1))
-
-        A_affine = img.affine
-        A = torch.Tensor(train_image).type(torch.FloatTensor)
-
-        return [filename, A, A_affine]
+        return [filename, image, img_affine]
 
 
 def create_folder(folder_path):
@@ -56,32 +50,27 @@ def create_folder(folder_path):
         os.makedirs(folder_path)
 
 
-if __name__ == "__main__":
+def main():
 
-    test_dir = './../data'
-    os.chdir(test_dir)
-
-    # Input test data
-    test_set = CVRDataset(test_dir)
-    test_set_size = len(test_set)
-
-    test_loader = data.DataLoader(test_set, batch_size=1, shuffle=False, num_workers=10)
+    wkdir = './../data'
+    model_path = './../model/pretrained_DLRS_CVR_BAT_model.pt'
+    os.chdir(wkdir)
 
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-    device = 'cpu'
 
-    model_path = './../model/pretrained_DLRS_CVR_BAT_model.pt'
+    # Load data
+    inference_set = CVRDataset(wkdir)
+    data_loader = data.DataLoader(inference_set, batch_size=1, shuffle=False, num_workers=4)
+
+    # Load model
     model = UNet_dual(in_channels=136, n_classes=1, depth=5, batch_norm=True, padding=True, up_mode='upconv')
     state_dict = torch.load(model_path, map_location='cpu')
-
     model.load_state_dict(state_dict)
     model.to(device)
 
     model.eval()
-    cvr = []
-    bat = []
     with torch.no_grad():
-        for X_ID, X, X_affine in test_loader:
+        for X_ID, X, X_affine in data_loader:
             X_dir = X_ID[0]
             X = X.to(device)
             prediction = model(X)  # [N, H, W]
@@ -95,14 +84,14 @@ if __name__ == "__main__":
             bat_output = nib.Nifti1Image(bat, X_affine)
             nib.save(bat_output, '_'.join([X_dir, 'BAT.nii']))
 
-    output_dir = "./../data/output"
+    output_dir = "/".join([wkdir, "output"])
     create_folder(output_dir)
 
-    for dir in os.listdir(test_dir):
-        if os.path.isdir(os.path.join(test_dir, dir)) and dir != "output":
-            create_folder('/'.join([output_dir, dir]))
+    for subdir in os.listdir(wkdir):
+        if os.path.isdir(os.path.join(wkdir, subdir)) and subdir != "output":
+            create_folder('/'.join([output_dir, subdir]))
 
-            dlrs_input_path = os.path.join(test_dir, dir, "DLRS_input")
+            dlrs_input_path = os.path.join(wkdir, subdir, "DLRS_input")
 
             # Get all 2D CVR files in the DLRS_input folder
             cvr_files = sorted([
@@ -112,7 +101,7 @@ if __name__ == "__main__":
 
             cvr_3D = np.dstack([nib.load(cvr_file).get_fdata() for cvr_file in cvr_files])
             cvr_3D = nib.Nifti1Image(cvr_3D, X_affine)
-            nib.save(cvr_3D, '/'.join([output_dir, dir, "DLRS_CVR.nii"]))
+            nib.save(cvr_3D, '/'.join([output_dir, subdir, "DLRS_CVR.nii"]))
 
             # Get all 2D BAT files in the DLRS_input folder
             bat_files = sorted([
@@ -122,4 +111,8 @@ if __name__ == "__main__":
 
             bat_3D = np.dstack([nib.load(bat_file).get_fdata() for bat_file in bat_files])
             bat_3D = nib.Nifti1Image(bat_3D, X_affine)
-            nib.save(bat_3D, '/'.join([output_dir, dir, "DLRS_BAT.nii"]))
+            nib.save(bat_3D, '/'.join([output_dir, subdir, "DLRS_BAT.nii"]))
+
+
+if __name__ == "__main__":
+    main()
