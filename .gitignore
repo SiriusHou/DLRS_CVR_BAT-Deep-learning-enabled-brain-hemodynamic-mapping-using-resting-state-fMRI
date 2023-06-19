@@ -1,4 +1,5 @@
 data/subject1
+data/output/subject1
 model/*.pt
 preprocessing/spm12
 
