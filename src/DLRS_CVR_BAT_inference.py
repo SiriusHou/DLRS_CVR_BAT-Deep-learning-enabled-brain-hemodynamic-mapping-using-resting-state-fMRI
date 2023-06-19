@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from torch.utils import data
 import nibabel as nib
-from model_spatialM_unet_dual_CVR_BAT import UNet_dual
+from DLRS_CVR_BAT_model import UNet_dual
 
 
 class CVRDataset(data.Dataset):

@@ -1,7 +1,4 @@
-# %%
-import time
 import os
-import glob
 import fnmatch
 import numpy as np
 import torch
@@ -11,12 +8,10 @@ from torch.utils.data.sampler import SubsetRandomSampler
 import matplotlib.pyplot as plt
 import nibabel as nib
 import math
-from model_spatialM_unet_dual_CVR_BAT import UNet_dual
+from DLRS_CVR_BAT_model import UNet_dual
 from adabelief_pytorch import AdaBelief
 
-# cwd
-# cwd = os.getcwd()
-# print(cwd)
+
 class CVRDataset(data.Dataset):
     'Characterizes a dataset for PyTorch'
 
@@ -184,11 +179,10 @@ if __name__ == "__main__":
             # y = y[:, :-1, :, :]
             y = y.to(device)  # [N, H, W] with class indices (0, 1)
             prediction = model(X)  # [N, H, W]
-            # loss = criterion(prediction, y[:, :-2, :, :]) + 4*criterion(prediction * y[:, 2:, :, :], y[:, :-2, :, :] * y[:, 2:, :, :])
             mask_index = torch.sum(y[:, 2:, :, :])
             if mask_index == 0:
                 print('Warning!')
-            loss = criterion(prediction, y[:, :-2, :, :]) + 4*torch.sum(torch.abs( (prediction- y[:, :-2, :, :]) * y[:, 2:, :, :]))/(torch.sum(y[:, 2:, :, :])+0.00001)
+            loss = criterion(prediction, y[:, :-2, :, :])
 
             #cross-correlation
             cvr_pred = prediction[:, 0, :, :]
