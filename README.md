@@ -9,7 +9,6 @@ An in-depth paragraph about your project and overview of use.
 ## Getting Started
 
 ### Installing
-
 * Create a virtual environment with Python 3.9
 ```
 conda create -n DLRS_CVR_BAT_env python=3.9
@@ -19,6 +18,11 @@ conda activate DLRS_CVR_BAT_env
 ```
 pip install -r ./requirements.txt
 ```
+
+### Downloading pretrained weights
+You can obtain the pre-trained weights by submitting a request to Hanzhang Lu. After receiving the weights, they should 
+be placed in the ./model directory.
+
 ### Executing program
 * Preprocess the raw BOLD data
 ```
