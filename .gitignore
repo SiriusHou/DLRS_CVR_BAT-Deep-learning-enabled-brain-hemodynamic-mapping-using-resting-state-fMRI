@@ -1,5 +1,5 @@
-data/*
-model/*
+data/subject1
+model/*.pt
 preprocessing/spm12
 
 # Byte-compiled / optimized / DLL files
