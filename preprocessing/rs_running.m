@@ -11,7 +11,7 @@ addpath(code_directory);
 data_directory = [parent_directory, filesep, 'data'];
 
 subfolder = dir(data_directory);
-subfolder(ismember({subfolder.name}, {'.', '..'})) =[];
+subfolder(ismember({subfolder.name}, {'.', '..', '.gitkeeper'})) =[];
 
 %% Preprocessing pipeline
 for ii=1:length(subfolder)
