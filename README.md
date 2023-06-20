@@ -31,9 +31,10 @@ You can obtain the pre-trained weights by submitting a request to Hanzhang Lu. A
 be placed in the ./model directory.
 
 ### Executing program
-* Preprocess the raw BOLD data
+* Preprocess the raw BOLD data using matlab.
 ```
-matlab ./preprocessing/rs_running.m
+Open matlab 
+Run ./preprocessing/rs_running.m
 ```
 * Compute the resting-state CVR and BAT maps based on pretrained model
 ```

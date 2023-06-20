@@ -69,7 +69,7 @@ sections = {1:tenth,...
             1+9*tenth:length(maskvox),...
             };
 
-p = parpool(12);
+p = parpool(maxNumCompThreads);
 for wctr = 1:length(sections)
     waitbar(wctr./length(sections),w,'Running Voxelwise Shift...')
     parfor k=sections{wctr} %101190:101190%
