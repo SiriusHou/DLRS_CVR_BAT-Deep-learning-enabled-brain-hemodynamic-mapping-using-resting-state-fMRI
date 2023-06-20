@@ -19,8 +19,8 @@ conda activate DLRS_CVR_BAT_env
 pip install -r ./requirements.txt
 ```
 
-* Please copy and paste SPM12 into ./preprocessing folder
-
+* Please download SPM12 into ./preprocessing folder. 
+* Please download SUIT (https://github.com/jdiedrichsen/suit/releases/tag/3.5) into ./processing/SPM12/toolbox.
 ### Creating data folder
 This pipeline requires each data folder includes both raw BOLD and MPRAGE images. For the code to run automatically, 
 it's also essential to generate a parameter_RS.txt and slice_order_RS.txt file for each data folder, as demonstrated 
