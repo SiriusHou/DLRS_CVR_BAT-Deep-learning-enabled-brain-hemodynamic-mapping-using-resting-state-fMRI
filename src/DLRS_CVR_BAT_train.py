@@ -85,8 +85,8 @@ def main():
     valid_sampler = SubsetRandomSampler(val_indices)
 
     # Generators
-    train_loader = data.DataLoader(training_set, batch_size=4, sampler=train_sampler, num_workers=12)
-    validation_loader = data.DataLoader(training_set, batch_size=4, sampler=valid_sampler, num_workers=12)
+    train_loader = data.DataLoader(training_set, batch_size=64, sampler=train_sampler, num_workers=12)
+    validation_loader = data.DataLoader(training_set, batch_size=64, sampler=valid_sampler, num_workers=12)
     model = UNet_dual(in_channels=136, n_classes=1, depth=5, batch_norm=True, padding=True, up_mode='upconv')
 
     # single gpu
