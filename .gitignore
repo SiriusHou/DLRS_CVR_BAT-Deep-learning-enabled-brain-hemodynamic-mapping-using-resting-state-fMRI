@@ -1,6 +1,7 @@
 data/subject1
 data/output/subject1
 model/*.pt
+model/*.png
 preprocessing/spm12
 
 # Byte-compiled / optimized / DLL files
