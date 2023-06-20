@@ -6,8 +6,8 @@ import torch.nn.functional as F
 class UNet_dual(nn.Module):
     def __init__(
         self,
-        in_channels=1,
-        n_classes=2,
+        in_channels=136,
+        n_classes=1,
         depth=5,
         wf=6,
         padding=False,
@@ -15,17 +15,9 @@ class UNet_dual(nn.Module):
         up_mode='upconv',
     ):
         """
-        Implementation of
-        U-Net: Convolutional Networks for Biomedical Image Segmentation
-        (Ronneberger et al., 2015)
-        https://arxiv.org/abs/1505.04597
-
-        Using the default arguments will yield the exact version used
-        in the original paper
-
         Args:
             in_channels (int): number of input channels
-            n_classes (int): number of output channels
+            n_classes (int): number of output channels for each decoder
             depth (int): depth of the network
             wf (int): number of filters in the first layer is 2**wf
             padding (bool): if True, apply padding such that the input shape
@@ -62,7 +54,6 @@ class UNet_dual(nn.Module):
         self.up_path_CVR = nn.ModuleList()
         for i in reversed(range(depth - 1)):
             cat_channels = 2 ** (wf + i) * 3
-            # cat_channels = 2 ** (wf + i)
             self.up_path_CVR.append(
                 UNetUpBlock(up_channels_c, cat_channels, 2 ** (wf + i), up_mode, padding, batch_norm)
             )
@@ -72,7 +63,6 @@ class UNet_dual(nn.Module):
         self.up_path_BAT = nn.ModuleList()
         for i in reversed(range(depth - 1)):
             cat_channels = 2 ** (wf + i) * 3
-            # cat_channels = 2 ** (wf + i)
             self.up_path_BAT.append(
                 UNetUpBlock(up_channels_b, cat_channels, 2 ** (wf + i), up_mode, padding, batch_norm)
             )
@@ -167,7 +157,6 @@ class UNetUpBlock(nn.Module):
         crop1 = self.center_crop(bridge1, up.shape[2:])
         crop2 = self.center_crop(bridge2, up.shape[2:])
         out = torch.cat([up, crop1, crop2], 1)
-        # out = torch.cat([up], 1)
         out = self.conv_block(out)
         return out
 
