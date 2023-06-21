@@ -1,6 +1,6 @@
 # DLRS_CVR_BAT: Deep-learning-enabled-brain-hemodynamic-mapping-using-resting-state-fMRI
 
-Simple overview of use/purpose.
+This repository contains the code and pre-trained models for our paper [Deep-learning-enabled brain hemodynamic mapping using resting-state fMRI](https://www.nature.com/articles/s41746-023-00859-y)
 
 ## Description
 
