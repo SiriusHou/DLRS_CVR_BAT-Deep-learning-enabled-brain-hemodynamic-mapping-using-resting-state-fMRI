@@ -41,3 +41,7 @@ Run ./preprocessing/rs_running.m
 python ./src/DLRS_CVR_BAT_inference.py
 ```
 
+### Citation
+Please cite our paper if you use DLRS CVR/BAT pipeline in your work:
+
+Hou, X., Guo, P., Wang, P. et al. Deep-learning-enabled brain hemodynamic mapping using resting-state fMRI. npj Digit. Med. 6, 116 (2023). https://doi.org/10.1038/s41746-023-00859-y
