@@ -30,8 +30,8 @@ it's also essential to generate a parameter_RS.txt and slice_order_RS.txt file f
 in the ./template/subject1 folder.
 
 ### Downloading pretrained weights
-You can obtain the pre-trained weights by submitting a request to Hanzhang Lu. After receiving the weights, they should 
-be placed in the ./model directory.
+You can obtain the pre-trained weights by submitting a request to Hanzhang Lu (hanzhang.lu@jhu.edu). After receiving the 
+weights, they should be placed in the ./model directory.
 
 ### Executing program
 * Preprocess the raw BOLD data using matlab.
