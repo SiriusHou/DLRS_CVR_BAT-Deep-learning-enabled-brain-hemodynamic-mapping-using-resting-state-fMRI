@@ -7,7 +7,8 @@ This repository contains the code and pre-trained models for our paper [Deep-lea
 Here we purpose a deep-learning network to use resting-state CO2 fluctuation as a natural "contrast media" to map
 cerebrovascular reactivity (CVR) and bolus arrival time (BAT). Our proposed deep-learning framework is based on the 
 “auto-encoder network” design and includes encoders and decoders. The following figure is an illustration of our network.
-![alt text](http://url/to/img.png)
+
+![alt text](https://github.com/SiriusHou/DLRS_CVR_BAT-Deep-learning-enabled-brain-hemodynamic-mapping-using-resting-state-fMRI/blob/main/figure/Figure1.png)
 ## Getting Started
 
 ### Installing
