@@ -1,14 +1,22 @@
 # DLRS_CVR_BAT: Deep-learning-enabled-brain-hemodynamic-mapping-using-resting-state-fMRI
+![alt image](https://img.shields.io/badge/python-3.9-green)
 
 This repository contains the code and pre-trained models for our paper [Deep-learning-enabled brain hemodynamic mapping using resting-state fMRI](https://www.nature.com/articles/s41746-023-00859-y)
 
+- [Overview](#overview)
+- [Getting Started](#getting Started)
+  * [Installing](#installing)
+  * [Creating data folder](#creating-data-folder)
+  * [Downloading pretrained weights](#downloading-pretrained-weights)
+  * [Executing program](#executing-program)
+- [Citation](#citation)
 ## Overview
 
 Here we purpose a deep-learning network to use resting-state CO2 fluctuation as a natural "contrast media" to map
 cerebrovascular reactivity (CVR) and bolus arrival time (BAT). Our proposed deep-learning framework is based on the 
 “auto-encoder network” design and includes encoders and decoders. The following figure is an illustration of our network.
 
-![alt text](https://github.com/SiriusHou/DLRS_CVR_BAT-Deep-learning-enabled-brain-hemodynamic-mapping-using-resting-state-fMRI/blob/main/figure/Figure1.png)
+![alt text](/figure/Figure1.png)
 ## Getting Started
 
 ### Installing
