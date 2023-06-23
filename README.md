@@ -4,7 +4,7 @@
 This repository contains the code and pre-trained models for our paper [Deep-learning-enabled brain hemodynamic mapping using resting-state fMRI](https://www.nature.com/articles/s41746-023-00859-y)
 
 - [Overview](#overview)
-- [Getting Started](#getting Started)
+- [Getting Started](#getting-started)
   * [Installing](#installing)
   * [Creating data folder](#creating-data-folder)
   * [Downloading pretrained weights](#downloading-pretrained-weights)
