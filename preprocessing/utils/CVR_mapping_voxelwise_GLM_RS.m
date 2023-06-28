@@ -15,9 +15,6 @@ if nargin>9
 end
 rp_data = varargin{11};
 
-% matlabpool('open',4);
-% p = parpool(4);
-
 minDelay=delaypara(1);
 maxDelay=delaypara(2);
 
@@ -72,7 +69,7 @@ sections = {1:tenth,...
 p = parpool(maxNumCompThreads);
 for wctr = 1:length(sections)
     waitbar(wctr./length(sections),w,'Running Voxelwise Shift...')
-    parfor k=sections{wctr} %101190:101190%
+    parfor k=sections{wctr} 
         sig = squeeze(filtfilt(b, a, img(k,:)))'; %low pass filter
         sig = smooth(sig, 10, 'sgolay', 5);
         sig = [TR*(0:length(sig)-1)',sig];
@@ -124,19 +121,9 @@ write_ANALYZE(beta3map,bold_beta3Path,matsize,voxsize,1,16);
 write_ANALYZE(CCmap,bold_ccPath,matsize,voxsize,1,16);
 
 spm_smooth(bold_batPath , [outpath_temp filesep name_cvr '_s' int2str(SmoothFWHMmm) '_co2delay.img'], SmoothFWHMmm);
-% thre = 4;
-% nave=floor(nVol/thre);
-% avedelay=mean(voxdelay);
-% optEtCO2 = cvr_func_interpTimecourse(etco2timecourse,avedelay,nVol,TR);
-% [Yco2,I]=sort(optEtCO2,'descend');
-% EtCO2_min =mean(Yco2(end-nave:end));  % lowest 1/4 as baseline
-% EtCO2_mean=mean(Yco2);
 
 co2_CVR=(beta1map./(beta3map-beta1map*(EtCO2_mean-EtCO2_min)))*100.*brainmask;
 write_ANALYZE(co2_CVR,[outpath_temp filesep name_cvr '_s' int2str(SmoothFWHMmm) '_CVR.img'],matsize,voxsize,1,16);
-
-% matlabpool('close');
-% delete(p);
 
 output = {bold_batPath, bold_beta1Path, bold_beta2Path, bold_beta3Path,...
     bold_ccPath, EtCO2_mean, EtCO2_min};
