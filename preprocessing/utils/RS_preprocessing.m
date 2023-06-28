@@ -136,8 +136,9 @@ cd(mpr_dir)
 
 mpr_brain_vol = spm_read_vols(spm_vol([mpr_file_name, '.img']));
 [outVol,varargout] = reorientVol(mpr_brain_vol, '+x+y+z');
-write_hdrimg(outVol, [mpr_file_name, '.img'], [1, 1, 1], mpr_type);
-write_hdrimg(outVol, [mpr_file_name, '.nii'], [1, 1, 1], mpr_type);
+mpr_resolution = mri_resolution(spm_vol([mpr_file_name, '.img']).mat);
+write_hdrimg(outVol, [mpr_file_name, '.img'], mpr_resolution, mpr_type);
+write_hdrimg(outVol, [mpr_file_name, '.nii'], mpr_resolution, mpr_type);
 
 %% Coregistration %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Segment MPRAGE and Create preMask %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -254,6 +255,7 @@ for ii = 1:length(V)
     end
     tmparray_4D(:, :, :, ii) = tmparray;
 end
+tmparray_4D(isnan(tmparray_4D)) = 0;
 
 ftempname = [rs_dir filesep 'war' bold_file_name '.nii'];
 write_hdrimg(tmparray_4D, ftempname, mni_resolution, mni_type);

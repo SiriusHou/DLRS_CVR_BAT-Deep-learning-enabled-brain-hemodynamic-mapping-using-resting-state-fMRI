@@ -81,15 +81,16 @@ boldImg_2D = reshape(detrendImg_4D, size(boldImg, 1)*size(boldImg, 2)*size(boldI
 %% cerebellum mask
 grayImg = spm_read_vols(spm_vol([wkdir, filesep, subname, filesep, 'mask', filesep, 'brainMask_RS_cerebellum.nii']));
 graymask_loc = find(grayImg == 1);
-
-%whole brain mask and seed mask
-maskImg = spm_read_vols(spm_vol([wkdir, filesep, subname, filesep, 'mask', filesep, 'brainMask_RS.nii']));
 boldImg_4D_eff = boldImg_2D(graymask_loc, :);
 
 %filter
 boldImg_4D_eff_filt = zeros(size(boldImg_4D_eff));
 for ii = 1:size(boldImg_4D_eff, 1)
-    boldImg_4D_eff_filt(ii, :) = filtfilt(b,a,boldImg_4D_eff(ii, :));  % Filtering
+    if isnan(sum(boldImg_4D_eff(ii, :)))
+        boldImg_4D_eff_filt(ii, :)=nan;
+    else
+        boldImg_4D_eff_filt(ii, :) = filtfilt(b,a,boldImg_4D_eff(ii, :));  % Filtering
+    end
 end
 
 bestEtCO2 = nanmean(boldImg_4D_eff_filt, 1)';
@@ -111,6 +112,7 @@ fclose(fileID_avgBOLD);
 cvrdir_v = [wkdir, filesep, subname, filesep, 'CVR_voxelshift_etco2_cerebellum'];
 mkdir(cvrdir_v);
 
+maskImg = spm_read_vols(spm_vol([wkdir, filesep, subname, filesep, 'mask', filesep, 'brainMask_RS.nii']));
 fixedDelayRange(1) = -9;
 fixedDelayRange(2) = 9;
 SmoothFWHMmm=8;
