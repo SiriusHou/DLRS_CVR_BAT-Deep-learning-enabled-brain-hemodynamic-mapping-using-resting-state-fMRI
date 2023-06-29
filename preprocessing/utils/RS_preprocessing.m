@@ -177,7 +177,7 @@ segment_job([mpr_file_name, '.nii'], tpm_loc); %segment mprage image
 rs_dynnum = length(spm_vol([boldfiles.folder, filesep, boldfiles.name]));
 
 deform_field = spm_select('FPList', mpr_dir, ['^y_', mpr_file_name, '.nii']);
-norm_job(rs_dir, bold_file_name, rs_dynnum, deform_field) %resoultion = 2*2*2mm
+norm_job(rs_dir, bold_file_name, rs_dynnum, tpm_loc); %resoultion = 2*2*2mm
 
 anaFile = spm_select('FPList', mpr_dir, ['^m', mpr_file_name, '.nii']);
 norm_ana_job(anaFile, deform_field); %resoultion = 2*2*2mm
@@ -237,7 +237,7 @@ c_cerebellum(c_cerebellum>cerebellum_thresh) = 1;
 c_cerebellum(c_cerebellum<=cerebellum_thresh) = 0;
 write_hdrimg(c_cerebellum, [wkdir, filesep, folder_name, filesep, 'mask', filesep, 'brainMask_RS_cerebellum.nii'], mni_resolution, mni_type);
 
-%% Smooth BOLD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Rewrite iamge %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 cd(rs_dir)
 
 % get realigned and resliced bold scan (prefixed with 'r')

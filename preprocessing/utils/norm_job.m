@@ -1,6 +1,7 @@
-function norm_job(rsdir, subname, dynnum, deform)
+function norm_job(rsdir, subname, dynnum, tpm_file)
 
-matlabbatch{1}.spm.spatial.normalise.write.subj.def = {deform};
+norm_est_file = spm_select('FPList', rsdir, ['^mean', subname, '.img']);
+matlabbatch{1}.spm.spatial.normalise.estwrite.subj.vol = {norm_est_file};
 for i=1:dynnum
     if i<10
         numstr=['00',num2str(i)];
@@ -16,13 +17,20 @@ for i=1:dynnum
     
 end
 
-matlabbatch{1}.spm.spatial.normalise.write.subj.resample=data1;
+matlabbatch{1}.spm.spatial.normalise.estwrite.subj.resample=data1;
 %%
-matlabbatch{1}.spm.spatial.normalise.write.woptions.bb = [-90 -126 -72
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.biasreg = 0.0001;
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.biasfwhm = 60;
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.tpm = fullfile(tpm_file, filesep, "TPM.nii");
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.affreg = 'mni';
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.reg = [0 0.001 0.5 0.05 0.2];
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.fwhm = 0;
+matlabbatch{1}.spm.spatial.normalise.estwrite.eoptions.samp = 3;
+matlabbatch{1}.spm.spatial.normalise.estwrite.woptions.bb = [-90 -126 -72
                                                           90 90 108];
-matlabbatch{1}.spm.spatial.normalise.write.woptions.vox = [2 2 2];
-matlabbatch{1}.spm.spatial.normalise.write.woptions.interp = 4;
-matlabbatch{1}.spm.spatial.normalise.write.woptions.prefix = 'w';
+matlabbatch{1}.spm.spatial.normalise.estwrite.woptions.vox = [2 2 2];
+matlabbatch{1}.spm.spatial.normalise.estwrite.woptions.interp = 4;
+matlabbatch{1}.spm.spatial.normalise.estwrite.woptions.prefix = 'w';
 
 spm_jobman('initcfg')
 spm_jobman('run',matlabbatch)
